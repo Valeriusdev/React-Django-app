@@ -1,4 +1,8 @@
+import { useState } from "react";
+
 function App() {
+  const [books, setBooks] = useState([]);
+
   return (
     <>
       <h1 className="text-blue-500 text-3xl font-bold mb-8 text-center">
