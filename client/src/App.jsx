@@ -1,7 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
   const [books, setBooks] = useState([]);
+
+  useEffect(() => {
+    fetchBooks();
+  }, []);
+
+  const fetchBooks = async () => {
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/books/");
+      const data = await response.json();
+      setBooks(data);      
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -25,6 +39,12 @@ function App() {
           </button>
         </form>
       </div>
+      {books.map((book)=>(
+        <div>
+          <p>Title: {book.title} </p>
+          <p>Release Year: {book.release_year} </p>
+        </div>      
+      ))}
     </>
   );
 }
