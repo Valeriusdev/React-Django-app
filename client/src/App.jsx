@@ -13,7 +13,7 @@ function App() {
     try {
       const response = await fetch("http://127.0.0.1:8000/api/books/");
       const data = await response.json();
-      setBooks(data);      
+      setBooks(data);
     } catch (error) {
       console.log(error);
     }
@@ -29,11 +29,13 @@ function App() {
           <input
             type="text"
             placeholder="Book title..."
+            onChange={(e) => setTitle(e.target.value)}
             className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
           <input
             type="text"
             placeholder="Release Date..."
+            onChange={(e) => setReleaseYear(e.target.value)}
             className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
           <button className="bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition">
@@ -41,11 +43,11 @@ function App() {
           </button>
         </form>
       </div>
-      {books.map((book)=>(
+      {books.map((book) => (
         <div>
           <p>Title: {book.title} </p>
           <p>Release Year: {book.release_year} </p>
-        </div>      
+        </div>
       ))}
     </>
   );
