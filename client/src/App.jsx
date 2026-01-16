@@ -19,6 +19,26 @@ function App() {
     }
   };
 
+  const addBook = async () => {
+    const bookData = {
+      title,
+      release_year: releaseYear,
+    };
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/books/create/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bookData),
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
       <h1 className="text-blue-500 text-3xl font-bold mb-8 text-center">
@@ -38,7 +58,10 @@ function App() {
             onChange={(e) => setReleaseYear(e.target.value)}
             className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
-          <button className="bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition">
+          <button
+            className="bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition"
+            onClick={addBook}
+          >
             Add Book
           </button>
         </form>
