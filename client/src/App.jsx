@@ -33,7 +33,7 @@ function App() {
         body: JSON.stringify(bookData),
       });
       const data = await response.json();
-      console.log(data);
+      setBooks((prevBooks) => [...prevBooks, data]);
     } catch (err) {
       console.log(err);
     }
