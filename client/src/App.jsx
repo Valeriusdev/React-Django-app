@@ -55,8 +55,19 @@ function App() {
       });
       const data = await response.json();
       setBooks((prevBooks) =>
-        prevBooks.map((book) => (book.id === pk ? data : book))
+        prevBooks.map((book) => (book.id === pk ? data : book)),
       );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const deleteBook = async (pk) => {
+    try {
+      await fetch(`http://127.0.0.1:8000/api/books/${pk}/`, {
+        method: "DELETE",
+      });
+      setBooks((prev) => prev.filter((book) => book.id !== pk));
     } catch (err) {
       console.log(err);
     }
@@ -98,7 +109,10 @@ function App() {
             placeholder="New title..."
             onChange={(e) => setNewTitle(e.target.value)}
           />
-          <button onClick={() => updateTitle(book.id, book.release_year)}>Change Title</button>
+          <button onClick={() => updateTitle(book.id, book.release_year)}>
+            Change Title
+          </button>
+          <button onClick={() => deleteBook(book.id)}>Delete</button>
         </div>
       ))}
     </>
