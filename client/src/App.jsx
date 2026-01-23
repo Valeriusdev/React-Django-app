@@ -74,11 +74,11 @@ function App() {
   };
 
   return (
-    <>
+    <div className="min-h-screen bg-gray-50 py-8">
       <h1 className="text-blue-500 text-3xl font-bold mb-8 text-center">
         Book app
       </h1>
-      <div className="flex items-center justify-center min-h-screen bg-gray-50">
+      <div className="flex flex-col items-center gap-8">
         <form className="bg-white p-8 rounded-lg shadow-md flex flex-col gap-4 w-full max-w-xs">
           <input
             type="text"
@@ -93,29 +93,53 @@ function App() {
             className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
           <button
+            type="button"
             className="bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition"
             onClick={addBook}
           >
             Add Book
           </button>
         </form>
-      </div>
-      {books.map((book) => (
-        <div>
-          <p>Title: {book.title} </p>
-          <p>Release Year: {book.release_year} </p>
-          <input
-            type="text"
-            placeholder="New title..."
-            onChange={(e) => setNewTitle(e.target.value)}
-          />
-          <button onClick={() => updateTitle(book.id, book.release_year)}>
-            Change Title
-          </button>
-          <button onClick={() => deleteBook(book.id)}>Delete</button>
+
+        <div className="w-full max-w-4xl px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {books.map((book) => (
+              <div
+                key={book.id}
+                className="bg-white p-8 rounded-lg shadow-md flex flex-col gap-4"
+              >
+                <div>
+                  <p className="font-semibold text-gray-700">{book.title}</p>
+                  <p className="text-gray-500 text-sm">
+                    Year: {book.release_year}
+                  </p>
+                </div>
+                <input
+                  type="text"
+                  placeholder="New title..."
+                  onChange={(e) => setNewTitle(e.target.value)}
+                  className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                />
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => updateTitle(book.id, book.release_year)}
+                    className="flex-1 bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition text-sm"
+                  >
+                    Update
+                  </button>
+                  <button
+                    onClick={() => deleteBook(book.id)}
+                    className="flex-1 bg-red-500 text-white py-2 rounded hover:bg-red-600 transition text-sm"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-      ))}
-    </>
+      </div>
+    </div>
   );
 }
 
