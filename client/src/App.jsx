@@ -82,13 +82,13 @@ function App() {
         <form className="bg-white p-8 rounded-lg shadow-md flex flex-col gap-4 w-full max-w-xs">
           <input
             type="text"
-            placeholder="Book title..."
+            placeholder="Book Title..."
             onChange={(e) => setTitle(e.target.value)}
             className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
           <input
             type="text"
-            placeholder="Release Date..."
+            placeholder="Release Year..."
             onChange={(e) => setReleaseYear(e.target.value)}
             className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
