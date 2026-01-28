@@ -94,7 +94,7 @@ function App() {
           />
           <button
             type="button"
-            className="bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition"
+            className="bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
             onClick={addBook}
           >
             Add Book
@@ -123,13 +123,13 @@ function App() {
                 <div className="flex gap-2">
                   <button
                     onClick={() => updateTitle(book.id, book.release_year)}
-                    className="flex-1 bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition text-sm"
+                    className="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition text-sm"
                   >
                     Update
                   </button>
                   <button
                     onClick={() => deleteBook(book.id)}
-                    className="flex-1 bg-red-500 text-white py-2 rounded hover:bg-red-600 transition text-sm"
+                    className="flex-1 bg-red-600 text-white py-2 rounded hover:bg-red-700 transition text-sm"
                   >
                     Delete
                   </button>
