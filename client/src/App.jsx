@@ -4,6 +4,8 @@ function App() {
   const [books, setBooks] = useState([]);
   const [title, setTitle] = useState("");
   const [releaseYear, setReleaseYear] = useState(0);
+  const [author, setAuthor] = useState("");
+  const [genre, setGenre] = useState("");
   const [newTitle, setNewTitle] = useState("");
 
   useEffect(() => {
@@ -24,6 +26,8 @@ function App() {
     const bookData = {
       title,
       release_year: releaseYear,
+      author,
+      genre,
     };
     try {
       const response = await fetch("http://127.0.0.1:8000/api/books/create/", {
@@ -90,6 +94,18 @@ function App() {
             type="text"
             placeholder="Release Year..."
             onChange={(e) => setReleaseYear(e.target.value)}
+            className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+          <input
+            type="text"
+            placeholder="Author..."
+            onChange={(e) => setAuthor(e.target.value)}
+            className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
+          <input
+            type="text"
+            placeholder="Genre..."
+            onChange={(e) => setGenre(e.target.value)}
             className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
           <button
