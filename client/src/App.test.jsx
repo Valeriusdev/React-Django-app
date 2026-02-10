@@ -18,4 +18,10 @@ describe("App", () => {
     const addButton = screen.getByRole("button", { name: /Add Book/i });
     expect(addButton).toBeInTheDocument();
   });
+
+  test("renders book title input field", () => {
+    render(<App />);
+    const titleInput = screen.getByPlaceholderText(/Book Title/i);
+    expect(titleInput).toBeInTheDocument();
+  });
 });
