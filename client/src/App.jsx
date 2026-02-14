@@ -126,9 +126,7 @@ function App() {
               >
                 <div>
                   <p className="font-semibold text-gray-700">{book.title}</p>
-                  <p className="text-gray-500 text-sm">
-                    Year: {book.release_year}
-                  </p>
+                  <p className="text-gray-500">Year: {book.release_year}</p>
                 </div>
                 <input
                   type="text"
@@ -139,13 +137,13 @@ function App() {
                 <div className="flex gap-2">
                   <button
                     onClick={() => updateTitle(book.id, book.release_year)}
-                    className="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition text-sm"
+                    className="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
                   >
                     Update
                   </button>
                   <button
                     onClick={() => deleteBook(book.id)}
-                    className="flex-1 bg-red-600 text-white py-2 rounded hover:bg-red-700 transition text-sm"
+                    className="flex-1 bg-red-600 text-white py-2 rounded hover:bg-red-700 transition"
                   >
                     Delete
                   </button>
