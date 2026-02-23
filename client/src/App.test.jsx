@@ -24,4 +24,10 @@ describe("App", () => {
     const titleInput = screen.getByPlaceholderText(/Book Title/i);
     expect(titleInput).toBeInTheDocument();
   });
+
+  test("renders release year input field", () => {
+    render(<App />);
+    const releaseYearInput = screen.getByPlaceholderText(/Release Year/i);
+    expect(releaseYearInput).toBeInTheDocument();
+  });
 });
