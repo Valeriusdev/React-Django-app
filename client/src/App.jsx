@@ -7,6 +7,7 @@ function App() {
   const [author, setAuthor] = useState("");
   const [genre, setGenre] = useState("");
   const [newTitle, setNewTitle] = useState("");
+  const [newReleaseYear, setNewReleaseYear] = useState(0);
 
   useEffect(() => {
     fetchBooks();
@@ -48,6 +49,28 @@ function App() {
     const bookData = {
       title: newTitle,
       release_year,
+    };
+    try {
+      const response = await fetch(`http://127.0.0.1:8000/api/books/${pk}/`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bookData),
+      });
+      const data = await response.json();
+      setBooks((prevBooks) =>
+        prevBooks.map((book) => (book.id === pk ? data : book)),
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const updateReleaseYear = async (pk, title) => {
+    const bookData = {
+      title,
+      release_year: newReleaseYear,
     };
     try {
       const response = await fetch(`http://127.0.0.1:8000/api/books/${pk}/`, {
@@ -134,12 +157,24 @@ function App() {
                   onChange={(e) => setNewTitle(e.target.value)}
                   className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
+                <input
+                  type="number"
+                  placeholder="New release year..."
+                  onChange={(e) => setNewReleaseYear(parseInt(e.target.value))}
+                  className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                />
                 <div className="flex gap-2">
                   <button
                     onClick={() => updateTitle(book.id, book.release_year)}
                     className="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
                   >
-                    Update
+                    Update Title
+                  </button>
+                  <button
+                    onClick={() => updateReleaseYear(book.id, book.title)}
+                    className="flex-1 bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
+                  >
+                    Update Year
                   </button>
                   <button
                     onClick={() => deleteBook(book.id)}
