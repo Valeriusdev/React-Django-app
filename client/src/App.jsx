@@ -176,6 +176,8 @@ function App() {
                   >
                     Update Year
                   </button>
+                </div>
+                <div className="flex mt-2">
                   <button
                     onClick={() => deleteBook(book.id)}
                     className="flex-1 bg-red-600 text-white py-2 rounded hover:bg-red-700 transition"
