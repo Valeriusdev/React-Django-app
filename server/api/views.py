@@ -1,8 +1,34 @@
+from django.contrib.auth.models import User
+from django.conf import settings
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework_simplejwt.tokens import RefreshToken
+from google.oauth2 import id_token
+from google.auth.transport import requests as google_requests
 from .models import Book
 from .serializer import BookSerializer
+
+
+@api_view(['POST'])
+def google_login(request):
+    token = request.data.get('token')
+    if not token:
+        return Response({'error': 'Token required'}, status=status.HTTP_400_BAD_REQUEST)
+    try:
+        payload = id_token.verify_oauth2_token(token, google_requests.Request(), settings.GOOGLE_CLIENT_ID)
+    except ValueError:
+        return Response({'error': 'Invalid token'}, status=status.HTTP_401_UNAUTHORIZED)
+    email = payload['email']
+    name = payload.get('name', '')
+    user, _ = User.objects.get_or_create(username=email, defaults={'first_name': name, 'email': email})
+    refresh = RefreshToken.for_user(user)
+    return Response({
+        'access': str(refresh.access_token),
+        'refresh': str(refresh),
+        'email': email,
+        'name': name,
+    })
 
 
 @api_view(['GET'])
