@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
+import { GoogleLogin } from "@react-oauth/google";
 
 function App() {
+  const [user, setUser] = useState(() => {
+    const saved = localStorage.getItem("user");
+    return saved ? JSON.parse(saved) : null;
+  });
   const [books, setBooks] = useState([]);
   const [title, setTitle] = useState("");
   const [releaseYear, setReleaseYear] = useState(0);
@@ -12,6 +17,34 @@ function App() {
   useEffect(() => {
     fetchBooks();
   }, []);
+
+  const handleGoogleLogin = async (credentialResponse) => {
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/auth/google/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token: credentialResponse.credential }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        const userData = {
+          name: data.name,
+          email: data.email,
+          accessToken: data.access,
+          refreshToken: data.refresh,
+        };
+        setUser(userData);
+        localStorage.setItem("user", JSON.stringify(userData));
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const logout = () => {
+    setUser(null);
+    localStorage.removeItem("user");
+  };
 
   const fetchBooks = async () => {
     try {
@@ -102,9 +135,25 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-50 py-8">
-      <h1 className="text-blue-500 text-3xl font-bold mb-8 text-center">
-        Book app
-      </h1>
+      <div className="flex justify-center items-center gap-4 mb-8">
+        <h1 className="text-blue-500 text-3xl font-bold">Book app</h1>
+        {user ? (
+          <div className="flex items-center gap-3">
+            <span className="text-blue-600 font-semibold">Welcome, {user.name}</span>
+            <button
+              onClick={logout}
+              className="bg-gray-200 text-gray-700 px-3 py-1 rounded hover:bg-gray-300 transition text-sm"
+            >
+              Logout
+            </button>
+          </div>
+        ) : (
+          <GoogleLogin
+            onSuccess={handleGoogleLogin}
+            onError={() => console.log("Login failed")}
+          />
+        )}
+      </div>
       <div className="flex flex-col items-center gap-8">
         <form className="bg-white p-8 rounded-lg shadow-md flex flex-col gap-4 w-full max-w-xs">
           <input
