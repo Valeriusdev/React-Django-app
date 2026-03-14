@@ -135,7 +135,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow flex items-center justify-between px-8 py-4">
+      <header className="bg-white shadow flex items-center justify-between px-8 py-6">
         <h1 className="text-blue-500 text-2xl font-bold">Book app</h1>
         {user ? (
           <div className="flex items-center gap-3">
