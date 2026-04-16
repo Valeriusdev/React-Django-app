@@ -30,4 +30,10 @@ describe("App", () => {
     const releaseYearInput = screen.getByPlaceholderText(/Release Year/i);
     expect(releaseYearInput).toBeInTheDocument();
   });
+
+  test("renders author input field", () => {
+    render(<App />);
+    const authorInput = screen.getByPlaceholderText(/Author/i);
+    expect(authorInput).toBeInTheDocument();
+  });
 });
