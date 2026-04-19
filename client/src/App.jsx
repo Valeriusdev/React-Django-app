@@ -13,6 +13,7 @@ function App() {
   const [genre, setGenre] = useState("");
   const [newTitle, setNewTitle] = useState("");
   const [newReleaseYear, setNewReleaseYear] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchBooks();
@@ -47,12 +48,15 @@ function App() {
   };
 
   const fetchBooks = async () => {
+    setLoading(true);
     try {
       const response = await fetch("http://127.0.0.1:8000/api/books/");
       const data = await response.json();
       setBooks(data);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -193,55 +197,63 @@ function App() {
           </form>
 
           <div className="w-full max-w-4xl px-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {books.map((book) => (
-                <div
-                  key={book.id}
-                  className="bg-white p-8 rounded-lg shadow-md flex flex-col gap-4"
-                >
-                  <div>
-                    <p className="font-semibold text-gray-700">{book.title}</p>
-                    <p className="text-gray-500">Year: {book.release_year}</p>
+            {loading ? (
+              <div className="flex justify-center py-16">
+                <div className="w-10 h-10 border-4 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {books.map((book) => (
+                  <div
+                    key={book.id}
+                    className="bg-white p-8 rounded-lg shadow-md flex flex-col gap-4"
+                  >
+                    <div>
+                      <p className="font-semibold text-gray-700">
+                        {book.title}
+                      </p>
+                      <p className="text-gray-500">Year: {book.release_year}</p>
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="New title..."
+                      onChange={(e) => setNewTitle(e.target.value)}
+                      className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
+                    <input
+                      type="number"
+                      placeholder="New release year..."
+                      onChange={(e) =>
+                        setNewReleaseYear(parseInt(e.target.value))
+                      }
+                      className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    />
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => updateTitle(book.id, book.release_year)}
+                        className="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+                      >
+                        Update Title
+                      </button>
+                      <button
+                        onClick={() => updateReleaseYear(book.id, book.title)}
+                        className="flex-1 bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
+                      >
+                        Update Year
+                      </button>
+                    </div>
+                    <div className="flex mt-2">
+                      <button
+                        onClick={() => deleteBook(book.id)}
+                        className="flex-1 bg-red-600 text-white py-2 rounded hover:bg-red-700 transition"
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
-                  <input
-                    type="text"
-                    placeholder="New title..."
-                    onChange={(e) => setNewTitle(e.target.value)}
-                    className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                  />
-                  <input
-                    type="number"
-                    placeholder="New release year..."
-                    onChange={(e) =>
-                      setNewReleaseYear(parseInt(e.target.value))
-                    }
-                    className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                  />
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => updateTitle(book.id, book.release_year)}
-                      className="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
-                    >
-                      Update Title
-                    </button>
-                    <button
-                      onClick={() => updateReleaseYear(book.id, book.title)}
-                      className="flex-1 bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
-                    >
-                      Update Year
-                    </button>
-                  </div>
-                  <div className="flex mt-2">
-                    <button
-                      onClick={() => deleteBook(book.id)}
-                      className="flex-1 bg-red-600 text-white py-2 rounded hover:bg-red-700 transition"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
