@@ -14,6 +14,7 @@ function App() {
   const [newTitle, setNewTitle] = useState("");
   const [newReleaseYear, setNewReleaseYear] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchBooks();
@@ -49,12 +50,13 @@ function App() {
 
   const fetchBooks = async () => {
     setLoading(true);
+    setError(null);
     try {
       const response = await fetch("http://127.0.0.1:8000/api/books/");
       const data = await response.json();
       setBooks(data);
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      setError("Failed to load books.");
     } finally {
       setLoading(false);
     }
@@ -78,7 +80,7 @@ function App() {
       const data = await response.json();
       setBooks((prevBooks) => [...prevBooks, data]);
     } catch (err) {
-      console.log(err);
+      setError("Failed to add book.");
     }
   };
 
@@ -100,7 +102,7 @@ function App() {
         prevBooks.map((book) => (book.id === pk ? data : book)),
       );
     } catch (err) {
-      console.log(err);
+      setError("Failed to update title.");
     }
   };
 
@@ -122,7 +124,7 @@ function App() {
         prevBooks.map((book) => (book.id === pk ? data : book)),
       );
     } catch (err) {
-      console.log(err);
+      setError("Failed to update release year.");
     }
   };
 
@@ -133,12 +135,23 @@ function App() {
       });
       setBooks((prev) => prev.filter((book) => book.id !== pk));
     } catch (err) {
-      console.log(err);
+      setError("Failed to delete book.");
     }
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {error && (
+        <div className="fixed top-4 left-1/2 -translate-x-1/2 bg-red-100 text-red-700 px-4 py-2 rounded flex items-center gap-3">
+          <span>{error}</span>
+          <button
+            onClick={() => setError(null)}
+            className="font-bold text-red-500 hover:text-red-700"
+          >
+            &times;
+          </button>
+        </div>
+      )}
       <header className="bg-white shadow flex items-center justify-between px-8 py-6">
         <h1 className="text-blue-500 text-2xl font-bold">Book app</h1>
         {user ? (
