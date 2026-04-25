@@ -219,8 +219,15 @@ function App() {
                 {books.map((book) => (
                   <div
                     key={book.id}
-                    className="bg-white p-8 rounded-lg shadow-md flex flex-col gap-4"
+                    className="relative bg-white p-8 rounded-lg shadow-md flex flex-col gap-4"
                   >
+                    <button
+                      onClick={() => deleteBook(book.id)}
+                      className="absolute top-2 right-2 text-red-500 hover:text-red-700 text-xl leading-none"
+                      aria-label="Delete book"
+                    >
+                      &times;
+                    </button>
                     <div>
                       <p className="font-semibold text-gray-700">
                         {book.title}
@@ -253,14 +260,6 @@ function App() {
                         className="flex-1 bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
                       >
                         Update Year
-                      </button>
-                    </div>
-                    <div className="flex mt-2">
-                      <button
-                        onClick={() => deleteBook(book.id)}
-                        className="flex-1 bg-red-600 text-white py-2 rounded hover:bg-red-700 transition"
-                      >
-                        Delete
                       </button>
                     </div>
                   </div>
