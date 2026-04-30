@@ -141,17 +141,6 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {error && (
-        <div className="fixed top-4 left-1/2 -translate-x-1/2 bg-red-100 text-red-700 px-4 py-2 rounded flex items-center gap-3">
-          <span>{error}</span>
-          <button
-            onClick={() => setError(null)}
-            className="font-bold text-red-500 hover:text-red-700"
-          >
-            &times;
-          </button>
-        </div>
-      )}
       <header className="bg-white shadow flex items-center justify-between px-8 py-6">
         <h1 className="text-blue-500 text-2xl font-bold">Book app</h1>
         {user ? (
@@ -208,6 +197,17 @@ function App() {
               Add Book
             </button>
           </form>
+          {error && (
+            <div className="bg-red-100 text-red-700 px-4 py-2 rounded flex items-center gap-3 w-full max-w-xs">
+              <span>{error}</span>
+              <button
+                onClick={() => setError(null)}
+                className="font-bold text-red-500 hover:text-red-700 ml-auto"
+              >
+                &times;
+              </button>
+            </div>
+          )}
 
           <div className="w-full max-w-4xl px-4">
             {loading ? (
