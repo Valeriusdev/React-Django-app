@@ -142,7 +142,12 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white shadow flex items-center justify-between px-8 py-6">
-        <h1 className="text-blue-500 text-2xl font-bold">Book app</h1>
+        <a
+          href="/"
+          className="text-blue-500 text-2xl font-bold"
+        >
+          Book App
+        </a>
         {user ? (
           <div className="flex items-center gap-3">
             <span className="text-blue-600 font-semibold">
