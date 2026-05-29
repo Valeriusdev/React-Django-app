@@ -22,3 +22,10 @@ def test_get_books_returns_list(api_client):
     assert isinstance(data, list)
     assert len(data) == 1
     assert data[0]['title'] == 'Test Book'
+
+@pytest.mark.django_db
+def test_create_book_returns_201(api_client):
+    payload = {'title': 'New Book', 'release_year': 2026}
+    response = api_client.post(reverse('create_book'), payload, format='json')
+    assert response.status_code == 201
+    assert response.json()['title'] == 'New Book'
