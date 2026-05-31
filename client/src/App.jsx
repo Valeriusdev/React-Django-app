@@ -142,10 +142,7 @@ function App() {
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white shadow flex items-center justify-between px-8 py-6">
-        <a
-          href="/"
-          className="text-blue-500 text-2xl font-bold"
-        >
+        <a href="/" className="text-blue-500 text-2xl font-bold">
           Book App
         </a>
         {user ? (
@@ -196,7 +193,7 @@ function App() {
             />
             <button
               type="button"
-              className="bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition mt-2"
+              className="bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition mt-2 cursor-pointer"
               onClick={addBook}
             >
               Add Book
