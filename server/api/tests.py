@@ -29,3 +29,11 @@ def test_create_book_returns_201(api_client):
     response = api_client.post(reverse('create_book'), payload, format='json')
     assert response.status_code == 201
     assert response.json()['title'] == 'New Book'
+
+@pytest.mark.django_db
+def test_update_book_returns_200(api_client):
+    book = Book.objects.create(title='Old Title', release_year=2020)
+    payload = {'title': 'Updated Title', 'release_year': 2026}
+    response = api_client.put(reverse('book_detail', args=[book.pk]), payload, format='json')
+    assert response.status_code == 200
+    assert response.json()['title'] == 'Updated Title'
