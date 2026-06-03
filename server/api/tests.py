@@ -37,3 +37,10 @@ def test_update_book_returns_200(api_client):
     response = api_client.put(reverse('book_detail', args=[book.pk]), payload, format='json')
     assert response.status_code == 200
     assert response.json()['title'] == 'Updated Title'
+
+@pytest.mark.django_db
+def test_delete_book_returns_204(api_client):
+    book = Book.objects.create(title='Book to Delete', release_year=2020)
+    response = api_client.delete(reverse('book_detail', args=[book.pk]))
+    assert response.status_code == 204
+    assert Book.objects.filter(pk=book.pk).exists() is False
