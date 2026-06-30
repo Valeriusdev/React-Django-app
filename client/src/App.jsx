@@ -53,6 +53,7 @@ function App() {
     setError(null);
     try {
       const response = await fetch("http://127.0.0.1:8000/api/books/");
+      if (!response.ok) throw new Error("Failed to load books.");
       const data = await response.json();
       setBooks(data);
     } catch (err) {
@@ -77,6 +78,7 @@ function App() {
         },
         body: JSON.stringify(bookData),
       });
+      if (!response.ok) throw new Error("Failed to add book.");
       const data = await response.json();
       setBooks((prevBooks) => [...prevBooks, data]);
     } catch (err) {
@@ -97,6 +99,7 @@ function App() {
         },
         body: JSON.stringify(bookData),
       });
+      if (!response.ok) throw new Error("Failed to update title.");
       const data = await response.json();
       setBooks((prevBooks) =>
         prevBooks.map((book) => (book.id === pk ? data : book)),
@@ -119,6 +122,7 @@ function App() {
         },
         body: JSON.stringify(bookData),
       });
+      if (!response.ok) throw new Error("Failed to update release year.");
       const data = await response.json();
       setBooks((prevBooks) =>
         prevBooks.map((book) => (book.id === pk ? data : book)),
