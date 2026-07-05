@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { GoogleLogin } from "@react-oauth/google";
 import BookCard from "./BookCard";
+import AddBookForm from "./AddBookForm";
 
 function App() {
   const [user, setUser] = useState(() => {
@@ -8,10 +9,6 @@ function App() {
     return saved ? JSON.parse(saved) : null;
   });
   const [books, setBooks] = useState([]);
-  const [title, setTitle] = useState("");
-  const [releaseYear, setReleaseYear] = useState(0);
-  const [author, setAuthor] = useState("");
-  const [genre, setGenre] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -62,13 +59,7 @@ function App() {
     }
   };
 
-  const addBook = async () => {
-    const bookData = {
-      title,
-      release_year: releaseYear,
-      author,
-      genre,
-    };
+  const addBook = async (bookData) => {
     try {
       const response = await fetch("http://127.0.0.1:8000/api/books/create/", {
         method: "POST",
@@ -169,39 +160,7 @@ function App() {
       </header>
       <div className="py-8">
         <div className="flex flex-col items-center gap-8">
-          <form className="bg-white p-8 rounded-lg shadow-md flex flex-col gap-4 w-full max-w-xs">
-            <input
-              type="text"
-              placeholder="Book Title..."
-              onChange={(e) => setTitle(e.target.value)}
-              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-            <input
-              type="text"
-              placeholder="Release Year..."
-              onChange={(e) => setReleaseYear(e.target.value)}
-              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-            <input
-              type="text"
-              placeholder="Author..."
-              onChange={(e) => setAuthor(e.target.value)}
-              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-            <input
-              type="text"
-              placeholder="Genre..."
-              onChange={(e) => setGenre(e.target.value)}
-              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-            <button
-              type="button"
-              className="bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition mt-2 cursor-pointer"
-              onClick={addBook}
-            >
-              Add Book
-            </button>
-          </form>
+          <AddBookForm onAdd={addBook} />
           {error && (
             <div className="bg-red-100 text-red-700 px-4 py-2 rounded flex items-center gap-3 w-full max-w-xs">
               <span>{error}</span>
