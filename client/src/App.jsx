@@ -76,11 +76,7 @@ function App() {
     }
   };
 
-  const updateTitle = async (pk, release_year, newTitle) => {
-    const bookData = {
-      title: newTitle,
-      release_year,
-    };
+  const updateBook = async (pk, bookData) => {
     try {
       const response = await fetch(`http://127.0.0.1:8000/api/books/${pk}/`, {
         method: "PUT",
@@ -89,36 +85,13 @@ function App() {
         },
         body: JSON.stringify(bookData),
       });
-      if (!response.ok) throw new Error("Failed to update title.");
+      if (!response.ok) throw new Error("Failed to update book.");
       const data = await response.json();
       setBooks((prevBooks) =>
         prevBooks.map((book) => (book.id === pk ? data : book)),
       );
     } catch (err) {
-      setError("Failed to update title.");
-    }
-  };
-
-  const updateReleaseYear = async (pk, title, newReleaseYear) => {
-    const bookData = {
-      title,
-      release_year: newReleaseYear,
-    };
-    try {
-      const response = await fetch(`http://127.0.0.1:8000/api/books/${pk}/`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(bookData),
-      });
-      if (!response.ok) throw new Error("Failed to update release year.");
-      const data = await response.json();
-      setBooks((prevBooks) =>
-        prevBooks.map((book) => (book.id === pk ? data : book)),
-      );
-    } catch (err) {
-      setError("Failed to update release year.");
+      setError("Failed to update book.");
     }
   };
 
@@ -185,8 +158,7 @@ function App() {
                     key={book.id}
                     book={book}
                     onDelete={deleteBook}
-                    onUpdateTitle={updateTitle}
-                    onUpdateYear={updateReleaseYear}
+                    onUpdate={updateBook}
                   />
                 ))}
               </div>
