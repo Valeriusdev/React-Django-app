@@ -3,6 +3,8 @@ import { GoogleLogin } from "@react-oauth/google";
 import BookCard from "./BookCard";
 import AddBookForm from "./AddBookForm";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+
 function App() {
   const [user, setUser] = useState(() => {
     const saved = localStorage.getItem("user");
@@ -18,7 +20,7 @@ function App() {
 
   const handleGoogleLogin = async (credentialResponse) => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/auth/google/", {
+      const response = await fetch(`${API_BASE_URL}/api/auth/google/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ token: credentialResponse.credential }),
@@ -48,7 +50,7 @@ function App() {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/books/");
+      const response = await fetch(`${API_BASE_URL}/api/books/`);
       if (!response.ok) throw new Error("Failed to load books.");
       const data = await response.json();
       setBooks(data);
@@ -61,7 +63,7 @@ function App() {
 
   const addBook = async (bookData) => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/books/create/", {
+      const response = await fetch(`${API_BASE_URL}/api/books/create/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -78,7 +80,7 @@ function App() {
 
   const updateBook = async (pk, bookData) => {
     try {
-      const response = await fetch(`http://127.0.0.1:8000/api/books/${pk}/`, {
+      const response = await fetch(`${API_BASE_URL}/api/books/${pk}/`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -97,7 +99,7 @@ function App() {
 
   const deleteBook = async (pk) => {
     try {
-      await fetch(`http://127.0.0.1:8000/api/books/${pk}/`, {
+      await fetch(`${API_BASE_URL}/api/books/${pk}/`, {
         method: "DELETE",
       });
       setBooks((prev) => prev.filter((book) => book.id !== pk));
