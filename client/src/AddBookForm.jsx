@@ -6,9 +6,20 @@ function AddBookForm({ onAdd }) {
   const [author, setAuthor] = useState("");
   const [genre, setGenre] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onAdd({ title, release_year: releaseYear, author, genre });
+    const success = await onAdd({
+      title,
+      release_year: releaseYear,
+      author,
+      genre,
+    });
+    if (success) {
+      setTitle("");
+      setReleaseYear("");
+      setAuthor("");
+      setGenre("");
+    }
   };
 
   return (
@@ -19,24 +30,28 @@ function AddBookForm({ onAdd }) {
       <input
         type="text"
         placeholder="Book Title..."
+        value={title}
         onChange={(e) => setTitle(e.target.value)}
         className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
       />
       <input
         type="text"
         placeholder="Release Year..."
+        value={releaseYear}
         onChange={(e) => setReleaseYear(e.target.value)}
         className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
       />
       <input
         type="text"
         placeholder="Author..."
+        value={author}
         onChange={(e) => setAuthor(e.target.value)}
         className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
       />
       <input
         type="text"
         placeholder="Genre..."
+        value={genre}
         onChange={(e) => setGenre(e.target.value)}
         className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
       />

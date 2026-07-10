@@ -73,6 +73,7 @@ function App() {
       if (!response.ok) throw new Error("Failed to add book.");
       const data = await response.json();
       setBooks((prevBooks) => [...prevBooks, data]);
+      return true;
     } catch (err) {
       setError("Failed to add book.");
     }
