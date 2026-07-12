@@ -100,9 +100,10 @@ function App() {
 
   const deleteBook = async (pk) => {
     try {
-      await fetch(`${API_BASE_URL}/api/books/${pk}/`, {
+      const response = await fetch(`${API_BASE_URL}/api/books/${pk}/`, {
         method: "DELETE",
       });
+      if (!response.ok) throw new Error("Failed to delete book.");
       setBooks((prev) => prev.filter((book) => book.id !== pk));
     } catch (err) {
       setError("Failed to delete book.");
