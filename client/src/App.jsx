@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { GoogleLogin } from "@react-oauth/google";
 import BookCard from "./BookCard";
 import AddBookForm from "./AddBookForm";
-
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
+import * as booksApi from "./api/books";
 
 function App() {
   const [user, setUser] = useState(() => {
@@ -50,9 +49,7 @@ function App() {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(`${API_BASE_URL}/api/books/`);
-      if (!response.ok) throw new Error("Failed to load books.");
-      const data = await response.json();
+      const data = await booksApi.fetchBooks();
       setBooks(data);
     } catch (err) {
       setError("Failed to load books.");
@@ -63,15 +60,7 @@ function App() {
 
   const addBook = async (bookData) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/books/create/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(bookData),
-      });
-      if (!response.ok) throw new Error("Failed to add book.");
-      const data = await response.json();
+      const data = await booksApi.addBook(bookData);
       setBooks((prevBooks) => [...prevBooks, data]);
       return true;
     } catch (err) {
@@ -81,15 +70,7 @@ function App() {
 
   const updateBook = async (pk, bookData) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/books/${pk}/`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(bookData),
-      });
-      if (!response.ok) throw new Error("Failed to update book.");
-      const data = await response.json();
+      const data = await booksApi.updateBook(pk, bookData);
       setBooks((prevBooks) =>
         prevBooks.map((book) => (book.id === pk ? data : book)),
       );
@@ -100,10 +81,7 @@ function App() {
 
   const deleteBook = async (pk) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/api/books/${pk}/`, {
-        method: "DELETE",
-      });
-      if (!response.ok) throw new Error("Failed to delete book.");
+      await booksApi.deleteBook(pk);
       setBooks((prev) => prev.filter((book) => book.id !== pk));
     } catch (err) {
       setError("Failed to delete book.");
