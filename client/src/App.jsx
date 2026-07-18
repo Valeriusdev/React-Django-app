@@ -128,13 +128,13 @@ function App() {
             </div>
           )}
 
-          <div className="w-full max-w-4xl px-4">
+          <div className="w-full max-w-7xl px-4">
             {loading ? (
               <div className="flex justify-center py-16">
                 <div className="w-10 h-10 border-4 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {books.map((book) => (
                   <BookCard
                     key={book.id}
