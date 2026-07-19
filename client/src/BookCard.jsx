@@ -16,6 +16,8 @@ function BookCard({ book, onDelete, onUpdate }) {
       <div>
         <p className="font-semibold text-gray-700">{book.title}</p>
         <p className="text-gray-500">Year: {book.release_year}</p>
+        <p className="text-gray-500">Author: {book.author}</p>
+        <p className="text-gray-500">Genre: {book.genre}</p>
       </div>
       <input
         type="text"
