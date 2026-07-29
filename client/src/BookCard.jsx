@@ -21,35 +21,39 @@ function BookCard({ book, onDelete, onUpdate }) {
       </div>
       <input
         type="text"
+        value={newTitle}
         placeholder="New title..."
         onChange={(e) => setNewTitle(e.target.value)}
         className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
       />
       <input
         type="number"
+        value={newReleaseYear || ""}
         placeholder="New release year..."
         onChange={(e) => setNewReleaseYear(parseInt(e.target.value))}
         className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
       />
       <div className="flex gap-2">
         <button
-          onClick={() =>
+          onClick={() => {
             onUpdate(book.id, {
               title: newTitle,
               release_year: book.release_year,
-            })
-          }
+            });
+            setNewTitle("");
+          }}
           className="flex-1 bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
         >
           Update Title
         </button>
         <button
-          onClick={() =>
+          onClick={() => {
             onUpdate(book.id, {
               title: book.title,
               release_year: newReleaseYear,
-            })
-          }
+            });
+            setNewReleaseYear(0);
+          }}
           className="flex-1 bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
         >
           Update Year
