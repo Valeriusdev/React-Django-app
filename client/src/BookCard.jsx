@@ -2,7 +2,7 @@ import { useState } from "react";
 
 function BookCard({ book, onDelete, onUpdate }) {
   const [newTitle, setNewTitle] = useState("");
-  const [newReleaseYear, setNewReleaseYear] = useState(0);
+  const [newReleaseYear, setNewReleaseYear] = useState("");
 
   return (
     <div className="relative bg-white p-8 rounded-lg shadow-md flex flex-col gap-4">
@@ -28,9 +28,9 @@ function BookCard({ book, onDelete, onUpdate }) {
       />
       <input
         type="number"
-        value={newReleaseYear || ""}
+        value={newReleaseYear}
         placeholder="New release year..."
-        onChange={(e) => setNewReleaseYear(parseInt(e.target.value))}
+        onChange={(e) => setNewReleaseYear(e.target.value)}
         className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
       />
       <div className="flex gap-2">
@@ -50,9 +50,9 @@ function BookCard({ book, onDelete, onUpdate }) {
           onClick={() => {
             onUpdate(book.id, {
               title: book.title,
-              release_year: newReleaseYear,
+              release_year: parseInt(newReleaseYear),
             });
-            setNewReleaseYear(0);
+            setNewReleaseYear("");
           }}
           className="flex-1 bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
         >
