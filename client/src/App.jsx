@@ -53,10 +53,15 @@ function App() {
       const data = await booksApi.fetchBooks();
       setBooks(data);
     } catch (err) {
-      setError("Failed to load books.");
+      showError("Failed to load books.");
     } finally {
       setLoading(false);
     }
+  };
+
+  const showError = (msg) => {
+    setError(msg);
+    setTimeout(() => setError(null), 3000);
   };
 
   const addBook = async (bookData) => {
@@ -67,7 +72,7 @@ function App() {
       setTimeout(() => setSuccessMessage(null), 3000);
       return true;
     } catch (err) {
-      setError("Failed to add book.");
+      showError("Failed to add book.");
     }
   };
 
@@ -78,7 +83,7 @@ function App() {
         prevBooks.map((book) => (book.id === pk ? data : book)),
       );
     } catch (err) {
-      setError("Failed to update book.");
+      showError("Failed to update book.");
     }
   };
 
@@ -87,7 +92,7 @@ function App() {
       await booksApi.deleteBook(pk);
       setBooks((prev) => prev.filter((book) => book.id !== pk));
     } catch (err) {
-      setError("Failed to delete book.");
+      showError("Failed to delete book.");
     }
   };
 
@@ -120,14 +125,8 @@ function App() {
         <div className="flex flex-col items-center gap-8">
           <AddBookForm onAdd={addBook} />
           {error && (
-            <div className="bg-red-100 text-red-700 px-4 py-2 rounded flex items-center gap-3 w-full max-w-xs">
-              <span>{error}</span>
-              <button
-                onClick={() => setError(null)}
-                className="font-bold text-red-500 hover:text-red-700 ml-auto"
-              >
-                &times;
-              </button>
+            <div className="bg-red-100 text-red-700 px-4 py-2 rounded w-full max-w-xs">
+              {error}
             </div>
           )}
           {successMessage && (
