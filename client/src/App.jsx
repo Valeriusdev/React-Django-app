@@ -12,6 +12,7 @@ function App() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
 
   useEffect(() => {
     fetchBooks();
@@ -62,6 +63,8 @@ function App() {
     try {
       const data = await booksApi.addBook(bookData);
       setBooks((prevBooks) => [...prevBooks, data]);
+      setSuccessMessage("Book added successfully!");
+      setTimeout(() => setSuccessMessage(null), 3000);
       return true;
     } catch (err) {
       setError("Failed to add book.");
@@ -125,6 +128,11 @@ function App() {
               >
                 &times;
               </button>
+            </div>
+          )}
+          {successMessage && (
+            <div className="bg-green-100 text-green-700 px-4 py-2 rounded flex items-center gap-3 w-full max-w-xs">
+              <span>{successMessage}</span>
             </div>
           )}
 
