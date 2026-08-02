@@ -91,6 +91,8 @@ function App() {
     try {
       await booksApi.deleteBook(pk);
       setBooks((prev) => prev.filter((book) => book.id !== pk));
+      setSuccessMessage("Book deleted successfully!");
+      setTimeout(() => setSuccessMessage(null), 3000);
     } catch (err) {
       showError("Failed to delete book.");
     }
