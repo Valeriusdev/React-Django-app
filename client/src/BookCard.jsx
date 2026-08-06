@@ -5,7 +5,7 @@ function BookCard({ book, onDelete, onUpdate }) {
   const [newReleaseYear, setNewReleaseYear] = useState("");
 
   return (
-    <div className="relative bg-white p-8 rounded-lg shadow-md flex flex-col gap-4">
+    <div className="relative bg-white p-8 rounded-lg shadow-md flex flex-col gap-4 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl">
       <button
         onClick={() => onDelete(book.id)}
         className="absolute top-2 right-2 text-red-500 hover:text-red-700 text-xl leading-none"
