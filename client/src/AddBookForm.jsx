@@ -5,9 +5,11 @@ function AddBookForm({ onAdd }) {
   const [releaseYear, setReleaseYear] = useState("");
   const [author, setAuthor] = useState("");
   const [genre, setGenre] = useState("");
+  const [yearError, setYearError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (yearError) return;
     const success = await onAdd({
       title,
       release_year: releaseYear,
@@ -17,6 +19,7 @@ function AddBookForm({ onAdd }) {
     if (success) {
       setTitle("");
       setReleaseYear("");
+      setYearError("");
       setAuthor("");
       setGenre("");
     }
@@ -34,13 +37,21 @@ function AddBookForm({ onAdd }) {
         onChange={(e) => setTitle(e.target.value)}
         className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
       />
-      <input
-        type="text"
-        placeholder="Release Year..."
-        value={releaseYear}
-        onChange={(e) => setReleaseYear(e.target.value)}
-        className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-      />
+      <div className="flex flex-col gap-1">
+        <input
+          type="text"
+          placeholder="Release Year..."
+          value={releaseYear}
+          onChange={(e) => {
+            setReleaseYear(e.target.value);
+            setYearError(
+              /\D/.test(e.target.value) ? "Release year must be a number." : "",
+            );
+          }}
+          className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+        {yearError && <span className="text-red-500 text-xs">{yearError}</span>}
+      </div>
       <input
         type="text"
         placeholder="Author..."
