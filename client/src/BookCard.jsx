@@ -4,6 +4,8 @@ import ConfirmDialog from "./ConfirmDialog";
 function BookCard({ book, onDelete, onUpdate }) {
   const [newTitle, setNewTitle] = useState("");
   const [newReleaseYear, setNewReleaseYear] = useState("");
+  const [newAuthor, setNewAuthor] = useState("");
+  const [newGenre, setNewGenre] = useState("");
   const [showConfirm, setShowConfirm] = useState(false);
 
   return (
@@ -46,16 +48,32 @@ function BookCard({ book, onDelete, onUpdate }) {
           onChange={(e) => setNewReleaseYear(e.target.value)}
           className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
+        <input
+          type="text"
+          value={newAuthor}
+          placeholder="New author..."
+          onChange={(e) => setNewAuthor(e.target.value)}
+          className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+        <input
+          type="text"
+          value={newGenre}
+          placeholder="New genre..."
+          onChange={(e) => setNewGenre(e.target.value)}
+          className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
         <button
           onClick={() => {
             onUpdate(book.id, {
               title: newTitle || book.title,
-              release_year: newReleaseYear
-                ? parseInt(newReleaseYear)
-                : book.release_year,
+              release_year: newReleaseYear ? parseInt(newReleaseYear) : book.release_year,
+              author: newAuthor || book.author,
+              genre: newGenre || book.genre,
             });
             setNewTitle("");
             setNewReleaseYear("");
+            setNewAuthor("");
+            setNewGenre("");
           }}
           className="bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
         >
