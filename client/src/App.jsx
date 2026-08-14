@@ -144,14 +144,20 @@ function App() {
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                {books.map((book) => (
-                  <BookCard
-                    key={book.id}
-                    book={book}
-                    onDelete={deleteBook}
-                    onUpdate={updateBook}
-                  />
-                ))}
+                {books.length === 0 ? (
+                  <p className="text-gray-400 col-span-full text-center py-16">
+                    No books yet.
+                  </p>
+                ) : (
+                  books.map((book) => (
+                    <BookCard
+                      key={book.id}
+                      book={book}
+                      onDelete={deleteBook}
+                      onUpdate={updateBook}
+                    />
+                  ))
+                )}
               </div>
             )}
           </div>
