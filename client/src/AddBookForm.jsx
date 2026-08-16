@@ -68,7 +68,8 @@ function AddBookForm({ onAdd }) {
       />
       <button
         type="submit"
-        className="bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition mt-2 cursor-pointer"
+        disabled={!title || !releaseYear || !author || !genre || !!yearError}
+        className="bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition mt-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
       >
         Add Book
       </button>
