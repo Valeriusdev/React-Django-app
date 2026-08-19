@@ -7,6 +7,7 @@ function BookCard({ book, onDelete, onUpdate }) {
   const [newAuthor, setNewAuthor] = useState("");
   const [newGenre, setNewGenre] = useState("");
   const [showConfirm, setShowConfirm] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   return (
     <>
@@ -28,57 +29,70 @@ function BookCard({ book, onDelete, onUpdate }) {
         >
           &times;
         </button>
+        <button
+          onClick={() => setIsEditing((v) => !v)}
+          className="absolute top-3 right-8 text-gray-400 hover:text-blue-500 text-sm leading-none"
+        >
+          ✏️
+        </button>
         <div>
           <p className="font-semibold text-gray-700">{book.title}</p>
           <p className="text-gray-500">Year: {book.release_year}</p>
           <p className="text-gray-500">Author: {book.author}</p>
           <p className="text-gray-500">Genre: {book.genre}</p>
         </div>
-        <input
-          type="text"
-          value={newTitle}
-          placeholder="New title..."
-          onChange={(e) => setNewTitle(e.target.value)}
-          className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
-        <input
-          type="number"
-          value={newReleaseYear}
-          placeholder="New release year..."
-          onChange={(e) => setNewReleaseYear(e.target.value)}
-          className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
-        <input
-          type="text"
-          value={newAuthor}
-          placeholder="New author..."
-          onChange={(e) => setNewAuthor(e.target.value)}
-          className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
-        <input
-          type="text"
-          value={newGenre}
-          placeholder="New genre..."
-          onChange={(e) => setNewGenre(e.target.value)}
-          className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-        />
-        <button
-          onClick={() => {
-            onUpdate(book.id, {
-              title: newTitle || book.title,
-              release_year: newReleaseYear ? parseInt(newReleaseYear) : book.release_year,
-              author: newAuthor || book.author,
-              genre: newGenre || book.genre,
-            });
-            setNewTitle("");
-            setNewReleaseYear("");
-            setNewAuthor("");
-            setNewGenre("");
-          }}
-          className="bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
-        >
-          Update
-        </button>
+        {isEditing && (
+          <>
+            <input
+              type="text"
+              value={newTitle}
+              placeholder="New title..."
+              onChange={(e) => setNewTitle(e.target.value)}
+              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+            <input
+              type="number"
+              value={newReleaseYear}
+              placeholder="New release year..."
+              onChange={(e) => setNewReleaseYear(e.target.value)}
+              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+            <input
+              type="text"
+              value={newAuthor}
+              placeholder="New author..."
+              onChange={(e) => setNewAuthor(e.target.value)}
+              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+            <input
+              type="text"
+              value={newGenre}
+              placeholder="New genre..."
+              onChange={(e) => setNewGenre(e.target.value)}
+              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+            <button
+              onClick={() => {
+                onUpdate(book.id, {
+                  title: newTitle || book.title,
+                  release_year: newReleaseYear
+                    ? parseInt(newReleaseYear)
+                    : book.release_year,
+                  author: newAuthor || book.author,
+                  genre: newGenre || book.genre,
+                });
+                setNewTitle("");
+                setNewReleaseYear("");
+                setNewAuthor("");
+                setNewGenre("");
+                setIsEditing(false);
+              }}
+              className="bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+            >
+              Update
+            </button>
+          </>
+        )}
       </div>
     </>
   );
