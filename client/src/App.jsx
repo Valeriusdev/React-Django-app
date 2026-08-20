@@ -70,7 +70,6 @@ function App() {
       setBooks((prevBooks) => [...prevBooks, data]);
       setSuccessMessage("Book added successfully!");
       setTimeout(() => setSuccessMessage(null), 3000);
-      return true;
     } catch (err) {
       showError("Failed to add book.");
     }
