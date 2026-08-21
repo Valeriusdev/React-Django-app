@@ -10,19 +10,17 @@ function AddBookForm({ onAdd }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (yearError) return;
-    const success = await onAdd({
+    await onAdd({
       title,
       release_year: releaseYear,
       author,
       genre,
     });
-    if (success) {
-      setTitle("");
-      setReleaseYear("");
-      setYearError("");
-      setAuthor("");
-      setGenre("");
-    }
+    setTitle("");
+    setReleaseYear("");
+    setYearError("");
+    setAuthor("");
+    setGenre("");
   };
 
   return (
