@@ -32,6 +32,7 @@ function BookCard({ book, onDelete, onUpdate }) {
         <button
           onClick={() => setIsEditing((v) => !v)}
           className="absolute top-3 right-8 text-gray-400 hover:text-blue-500 text-sm leading-none"
+          aria-label="Edit book"
         >
           ✏️
         </button>
