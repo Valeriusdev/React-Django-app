@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ConfirmDialog from "./ConfirmDialog";
+import Input from "./Input";
 
 function BookCard({ book, onDelete, onUpdate }) {
   const [newTitle, setNewTitle] = useState("");
@@ -43,29 +44,25 @@ function BookCard({ book, onDelete, onUpdate }) {
           <p className="text-gray-500">Genre: {book.genre}</p>
         </div>
         {isEditing && (
-          <>
-            <input
+          <>Input
               type="text"
               value={newTitle}
               placeholder="New title..."
               onChange={(e) => setNewTitle(e.target.value)}
-              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
-            <input
+            <Input
               type="number"
               value={newReleaseYear}
               placeholder="New release year..."
               onChange={(e) => setNewReleaseYear(e.target.value)}
-              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
-            <input
+            <Input
               type="text"
               value={newAuthor}
               placeholder="New author..."
               onChange={(e) => setNewAuthor(e.target.value)}
-              className="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
-            <input
+            <Input
               type="text"
               value={newGenre}
               placeholder="New genre..."
