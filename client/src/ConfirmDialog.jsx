@@ -1,7 +1,10 @@
 function ConfirmDialog({ message, onConfirm, onCancel }) {
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-xl p-8 flex flex-col gap-6 w-full max-w-xs">
+      <div
+        role="alertdialog"
+        className="bg-white rounded-lg shadow-xl p-8 flex flex-col gap-6 w-full max-w-xs"
+      >
         <p className="text-gray-700 font-semibold text-center">{message}</p>
         <div className="flex gap-3">
           <button
