@@ -99,7 +99,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow flex items-center justify-between px-8 py-6">
+      <header className="sticky top-0 z-10 bg-white shadow flex items-center justify-between px-8 py-6">
         <a href="/" className="text-blue-500 text-2xl font-bold">
           Book App
         </a>
