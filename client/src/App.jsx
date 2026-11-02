@@ -122,44 +122,42 @@ function App() {
           />
         )}
       </header>
-      <div className="py-8">
-        <div className="flex flex-col items-center gap-8">
-          <AddBookForm onAdd={addBook} />
-          {error && (
-            <div className="bg-red-100 text-red-700 px-4 py-2 rounded w-full max-w-xs">
-              {error}
-            </div>
-          )}
-          {successMessage && (
-            <div className="bg-green-100 text-green-700 px-4 py-2 rounded flex items-center gap-3 w-full max-w-xs">
-              <span>{successMessage}</span>
-            </div>
-          )}
-
-          <div className="w-full max-w-7xl px-4">
-            {loading ? (
-              <div className="flex justify-center py-16">
-                <div className="w-10 h-10 border-4 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                {books.length === 0 ? (
-                  <p className="text-gray-400 col-span-full text-center py-16">
-                    No books yet.
-                  </p>
-                ) : (
-                  books.map((book) => (
-                    <BookCard
-                      key={book.id}
-                      book={book}
-                      onDelete={deleteBook}
-                      onUpdate={updateBook}
-                    />
-                  ))
-                )}
-              </div>
-            )}
+      <div className="py-8 flex flex-col items-center gap-8">
+        <AddBookForm onAdd={addBook} />
+        {error && (
+          <div className="bg-red-100 text-red-700 px-4 py-2 rounded w-full max-w-xs">
+            {error}
           </div>
+        )}
+        {successMessage && (
+          <div className="bg-green-100 text-green-700 px-4 py-2 rounded flex items-center gap-3 w-full max-w-xs">
+            <span>{successMessage}</span>
+          </div>
+        )}
+
+        <div className="w-full max-w-7xl px-4">
+          {loading ? (
+            <div className="flex justify-center py-16">
+              <div className="w-10 h-10 border-4 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              {books.length === 0 ? (
+                <p className="text-gray-400 col-span-full text-center py-16">
+                  No books yet.
+                </p>
+              ) : (
+                books.map((book) => (
+                  <BookCard
+                    key={book.id}
+                    book={book}
+                    onDelete={deleteBook}
+                    onUpdate={updateBook}
+                  />
+                ))
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>
