@@ -44,7 +44,8 @@ function BookCard({ book, onDelete, onUpdate }) {
           <p className="text-gray-500">Genre: {book.genre}</p>
         </div>
         {isEditing && (
-          <>Input
+          <>
+            <Input
               type="text"
               value={newTitle}
               placeholder="New title..."
